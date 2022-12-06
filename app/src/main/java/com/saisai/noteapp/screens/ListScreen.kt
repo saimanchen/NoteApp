@@ -28,19 +28,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.saisai.noteapp.R
+import com.saisai.noteapp.Screen
 import com.saisai.noteapp.data.Note
 
 @Composable
-fun ListScreen() {
+fun ListScreen(
+    navController: NavController
+) {
     Column {
-        ListScreenHeader()
+        ListScreenHeader(navController)
         NoteList()
     }
 }
 
 @Composable
-fun ListScreenHeader() {
+fun ListScreenHeader(
+    navController: NavController
+) {
 
     Column{
         Row(
@@ -56,7 +62,9 @@ fun ListScreenHeader() {
                 modifier = Modifier
                     .size(width = 40.dp, height = 40.dp)
                     .offset(x = -(10.dp))
-                    .clickable { println("logoutBtn") }
+                    .clickable {
+                        navController.navigate(route = Screen.Login.route)
+                    }
             )
 
             Image(
@@ -65,7 +73,9 @@ fun ListScreenHeader() {
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .size(width = 40.dp, height = 40.dp)
-                    .clickable { println("addBtn") }
+                    .clickable {
+                        navController.navigate(route = Screen.AddNote.route)
+                    }
             )
         }
 
