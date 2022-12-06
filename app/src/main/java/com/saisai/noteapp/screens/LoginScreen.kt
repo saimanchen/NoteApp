@@ -24,16 +24,20 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.saisai.noteapp.R
+import com.saisai.noteapp.Screen
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    navController: NavController
+) {
     Column(modifier = Modifier
         .padding(top = 192.dp, start = 48.dp, end = 48.dp)
     ) {
         NoteIcon()
-        LoginForm()
-        LoginButton()
+        LoginForm(navController)
+        LoginButton(navController)
     }
 }
 
@@ -49,7 +53,9 @@ fun NoteIcon() {
 }
 
 @Composable
-fun LoginForm() {
+fun LoginForm(
+    navController: NavController
+) {
     Text(
         text = "Login",
         style = MaterialTheme.typography.titleLarge.copy(
@@ -119,7 +125,7 @@ fun LoginForm() {
                 role = null,
                 onClick = {
                     /* Navigate to register screen */
-                    println("hello")
+                    navController.navigate(route = Screen.Register.route)
                 }
             ),
             text = "Register",
@@ -132,7 +138,9 @@ fun LoginForm() {
 }
 
 @Composable
-fun LoginButton() {
+fun LoginButton(
+    navController: NavController
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -148,7 +156,7 @@ fun LoginButton() {
                 backgroundColor = MaterialTheme.colorScheme.background
             ),
             onClick = {
-                println("hello world")
+                navController.navigate(route = Screen.List.route)
             }
         ) {
             Text("Login")

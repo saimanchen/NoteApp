@@ -24,10 +24,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.saisai.noteapp.R
+import com.saisai.noteapp.Screen
 
 @Composable
-fun AddNoteScreen() {
+fun AddNoteScreen(
+    navController: NavController
+) {
     fun titleMaxLength(input: String) = if (input.length > 60) input.substring(0..59) else input
     fun descriptionMaxLength(input: String) = if (input.length > 150) input.substring(0..149) else input
 
@@ -144,8 +148,7 @@ fun AddNoteScreen() {
                         backgroundColor = MaterialTheme.colorScheme.background
                     ),
                     onClick = {
-
-                        println("add new note")
+                        navController.navigate(route = Screen.List.route)
                     }
                 ) {
                     Text(text = "Add new note")

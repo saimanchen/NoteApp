@@ -21,20 +21,26 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.saisai.noteapp.Screen
 
 @Composable
-fun RegisterScreen() {
+fun RegisterScreen(
+    navController: NavController
+) {
     Column(modifier = Modifier
         .padding(top = 192.dp, start = 48.dp, end = 48.dp)
     ) {
         NoteIcon()
-        RegisterForm()
-        RegisterButton()
+        RegisterForm(navController)
+        RegisterButton(navController)
     }
 }
 
 @Composable
-fun RegisterForm() {
+fun RegisterForm(
+    navController: NavController
+) {
     Text(
         text = "Sign up",
         style = MaterialTheme.typography.titleLarge.copy(
@@ -127,7 +133,7 @@ fun RegisterForm() {
                 role = null,
                 onClick = {
                     /* Navigate to register screen */
-                    println("hello")
+                    navController.navigate(route = Screen.Login.route)
                 }
             ),
             text = "Login",
@@ -140,7 +146,9 @@ fun RegisterForm() {
 }
 
 @Composable
-fun RegisterButton() {
+fun RegisterButton(
+    navController: NavController
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -162,7 +170,7 @@ fun RegisterButton() {
                  3. navigates to ListScreen
                */
 
-                println("hello world")
+                navController.navigate(route = Screen.List.route)
             }
         ) {
             Text(text = "Sign up")
