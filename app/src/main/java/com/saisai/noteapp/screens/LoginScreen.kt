@@ -37,7 +37,7 @@ fun LoginScreen(
     ) {
         NoteIcon()
         LoginForm(navController)
-        LoginButton()
+        LoginButton(navController)
     }
 }
 
@@ -138,7 +138,9 @@ fun LoginForm(
 }
 
 @Composable
-fun LoginButton() {
+fun LoginButton(
+    navController: NavController
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -154,7 +156,7 @@ fun LoginButton() {
                 backgroundColor = MaterialTheme.colorScheme.background
             ),
             onClick = {
-                println("hello world")
+                navController.navigate(route = Screen.List.route)
             }
         ) {
             Text("Login")
