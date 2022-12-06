@@ -25,7 +25,7 @@ fun SetupNavGraph(
         composable(
             route = Screen.Register.route
         ) {
-            RegisterScreen()
+            RegisterScreen(navController)
         }
 
         composable(
