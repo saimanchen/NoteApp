@@ -41,7 +41,7 @@ fun LoginScreen() {
 fun NoteIcon() {
     Image(
         painter = painterResource(id = R.drawable.ic_note),
-        contentDescription = "Note icon",
+        contentDescription = null,
         contentScale = ContentScale.Fit,
         modifier = Modifier
             .size(width = 150.dp, height = 35.dp)

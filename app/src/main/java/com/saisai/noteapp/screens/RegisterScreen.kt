@@ -36,7 +36,7 @@ fun RegisterScreen() {
 @Composable
 fun RegisterForm() {
     Text(
-        text = "Register",
+        text = "Sign up",
         style = MaterialTheme.typography.titleLarge.copy(
             fontWeight = FontWeight.Light
         ),
@@ -165,7 +165,7 @@ fun RegisterButton() {
                 println("hello world")
             }
         ) {
-            Text("Register")
+            Text(text = "Sign up")
         }
     }
 
