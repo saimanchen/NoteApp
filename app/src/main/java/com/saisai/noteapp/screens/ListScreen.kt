@@ -41,7 +41,8 @@ fun ListScreen() {
 
 @Composable
 fun ListScreenHeader() {
-    Column {
+
+    Column{
         Row(
             modifier = Modifier
                 .padding(top = 20.dp, end = 20.dp)
@@ -131,8 +132,8 @@ fun NoteItem(
             Text(
                 text = title,
                 textAlign = TextAlign.Justify,
-                color = Color.White,
                 style = MaterialTheme.typography.titleSmall.copy(
+                    color = Color.LightGray,
                     fontWeight = FontWeight.Light
                 )
             )
@@ -140,15 +141,15 @@ fun NoteItem(
             Column(modifier = Modifier.padding(top = 10.dp)) {
                 Text(
                     text = "Short Description",
-                    color = Color.Gray,
                     style = MaterialTheme.typography.bodySmall.copy(
+                        color = Color.Gray,
                         fontWeight = FontWeight.Light
                     )
                 )
                 Text(
                     text = description,
-                    color = Color.LightGray,
                     style = MaterialTheme.typography.bodyMedium.copy(
+                        color = Color.LightGray,
                         fontWeight = FontWeight.Light
                     )
                 )
@@ -158,15 +159,15 @@ fun NoteItem(
                 Column(modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)) {
                     Text(
                         text = "Content",
-                        color = Color.Gray,
                         style = MaterialTheme.typography.bodySmall.copy(
+                            color = Color.Gray,
                             fontWeight = FontWeight.Light
                         )
                     )
                     Text(
                         text = content,
-                        color = Color.LightGray,
                         style = MaterialTheme.typography.bodyMedium.copy(
+                            color = Color.LightGray,
                             fontWeight = FontWeight.Light
                         )
                     )

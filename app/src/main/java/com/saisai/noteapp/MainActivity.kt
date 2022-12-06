@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.saisai.noteapp.screens.AddNoteScreen
 import com.saisai.noteapp.screens.ListScreen
 import com.saisai.noteapp.screens.LoginScreen
 import com.saisai.noteapp.screens.RegisterScreen
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ListScreen()
+                    AddNoteScreen()
                 }
             }
         }
