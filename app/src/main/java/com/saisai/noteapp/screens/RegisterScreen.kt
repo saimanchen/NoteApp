@@ -133,7 +133,7 @@ fun RegisterForm(
                 role = null,
                 onClick = {
                     /* Navigate to register screen */
-                    navController.navigate(route = Screen.Login.route)
+                    navController.popBackStack()
                 }
             ),
             text = "Login",

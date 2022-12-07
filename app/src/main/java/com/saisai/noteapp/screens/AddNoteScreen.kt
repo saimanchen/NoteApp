@@ -148,7 +148,7 @@ fun AddNoteScreen(
                         backgroundColor = MaterialTheme.colorScheme.background
                     ),
                     onClick = {
-                        navController.navigate(route = Screen.List.route)
+                        navController.popBackStack()
                     }
                 ) {
                     Text(text = "Add new note")
