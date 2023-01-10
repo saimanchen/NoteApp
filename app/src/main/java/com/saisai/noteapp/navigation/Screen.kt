@@ -1,4 +1,4 @@
-package com.saisai.noteapp
+package com.saisai.noteapp.navigation
 
 sealed class Screen(val route: String) {
     object Login: Screen(route = "login_screen")

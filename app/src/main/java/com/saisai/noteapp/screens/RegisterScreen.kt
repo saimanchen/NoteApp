@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.saisai.noteapp.Screen
+import com.saisai.noteapp.navigation.Screen
 
 @Composable
 fun RegisterScreen(

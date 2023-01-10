@@ -2,7 +2,6 @@ package com.saisai.noteapp.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.ButtonDefaults
@@ -26,7 +25,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.saisai.noteapp.R
-import com.saisai.noteapp.Screen
 
 @Composable
 fun AddNoteScreen(

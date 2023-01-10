@@ -7,7 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -16,11 +16,8 @@ import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -30,16 +27,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.saisai.noteapp.R
-import com.saisai.noteapp.Screen
-import com.saisai.noteapp.data.Note
+import com.saisai.noteapp.navigation.Screen
+import com.saisai.noteapp.viewmodel.ApiViewModel
 
 @Composable
 fun ListScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: ApiViewModel
 ) {
     Column {
         ListScreenHeader(navController)
-        NoteList()
+        NoteList(viewModel)
     }
 }
 
@@ -85,32 +83,20 @@ fun ListScreenHeader(
 
 @Composable
 fun NoteList(
-    notes: List<Note> = listOf(
-        Note(
-            title = "Lorem ipsum 1",
-            description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a ante bibendum, hendrerit tortor vitae, vehicula lorem.",
-            content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a ante bibendum, hendrerit tortor vitae, vehicula lorem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a ante bibendum, hendrerit tortor vitae, vehicula lorem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a ante bibendum, hendrerit tortor vitae, vehicula lorem."
-        ),
-        Note(
-            title = "Lorem ipsum 2",
-            description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a ante bibendum, hendrerit tortor vitae, vehicula lorem.",
-            content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a ante bibendum, hendrerit tortor vitae, vehicula lorem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a ante bibendum, hendrerit tortor vitae, vehicula lorem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a ante bibendum, hendrerit tortor vitae, vehicula lorem. "
-        ),
-        Note(
-            title = "Lorem ipsum 3",
-            description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a ante bibendum, hendrerit tortor vitae, vehicula lorem.",
-            content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a ante bibendum, hendrerit tortor vitae, vehicula lorem.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a ante bibendum, hendrerit tortor vitae, vehicula lorem.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a ante bibendum, hendrerit tortor vitae, vehicula lorem.\n"
-        ),
-        Note(
-            title = "Lorem ipsum 4",
-            description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a ante bibendum, hendrerit tortor vitae, vehicula lorem.",
-            content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a ante bibendum, hendrerit tortor vitae, vehicula lorem.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a ante bibendum, hendrerit tortor vitae, vehicula lorem.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a ante bibendum, hendrerit tortor vitae, vehicula lorem.\n"
-        ),
-    )
+    viewModel: ApiViewModel
 ) {
-    LazyColumn(modifier = Modifier.padding(vertical = 4.dp)) {
-        items(items = notes) { (title, description, content) ->
-            NoteItem(title = title, content = content, description = description)
+    LaunchedEffect(Unit, block = {
+        viewModel.getNotes(viewModel.token)
+    })
+
+    var notes = viewModel.notes
+
+    if (notes != null) {
+
+        LazyColumn(modifier = Modifier.padding(vertical = 4.dp)) {
+            itemsIndexed(items = notes) { _, note ->
+                NoteItem(title = note.title, shortDescription = note.shortDescription, content = note.content)
+            }
         }
     }
 }
@@ -118,8 +104,8 @@ fun NoteList(
 @Composable
 fun NoteItem(
     title: String,
-    content: String,
-    description: String
+    shortDescription: String,
+    content: String
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
 
@@ -157,7 +143,7 @@ fun NoteItem(
                     )
                 )
                 Text(
-                    text = description,
+                    text = shortDescription,
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = Color.LightGray,
                         fontWeight = FontWeight.Light

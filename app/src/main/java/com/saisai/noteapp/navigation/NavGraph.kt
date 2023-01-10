@@ -1,4 +1,4 @@
-package com.saisai.noteapp
+package com.saisai.noteapp.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -8,10 +8,11 @@ import com.saisai.noteapp.screens.AddNoteScreen
 import com.saisai.noteapp.screens.ListScreen
 import com.saisai.noteapp.screens.LoginScreen
 import com.saisai.noteapp.screens.RegisterScreen
+import com.saisai.noteapp.viewmodel.ApiViewModel
 
 @Composable
 fun SetupNavGraph(
-    navController: NavHostController
+    navController: NavHostController, viewModel: ApiViewModel
 ) {
     NavHost(
         navController = navController,
@@ -20,7 +21,7 @@ fun SetupNavGraph(
         composable(
             route = Screen.Login.route
         ) {
-            LoginScreen(navController)
+            LoginScreen(navController, viewModel)
         }
 
         composable(
@@ -32,7 +33,7 @@ fun SetupNavGraph(
         composable(
             route = Screen.List.route
         ) {
-            ListScreen(navController)
+            ListScreen(navController, viewModel)
         }
 
         composable(

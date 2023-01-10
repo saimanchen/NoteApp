@@ -10,11 +10,8 @@ import androidx.compose.material.Divider
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,18 +23,33 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.saisai.noteapp.R
-import com.saisai.noteapp.Screen
+import com.saisai.noteapp.navigation.Screen
+import com.saisai.noteapp.viewmodel.ApiViewModel
+import androidx.compose.ui.tooling.*
+import kotlinx.coroutines.delay
+import java.util.Timer
 
 @Composable
 fun LoginScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: ApiViewModel
 ) {
+    var textEmail by rememberSaveable { mutableStateOf("") }
+    var textPassword by rememberSaveable { mutableStateOf("") }
+
     Column(modifier = Modifier
         .padding(top = 192.dp, start = 48.dp, end = 48.dp)
     ) {
         NoteIcon()
-        LoginForm(navController)
-        LoginButton(navController)
+
+        LoginForm(
+            navController,
+            textEmail,
+            textPassword,
+            onEmailValueChange = { textEmail = it },
+            onPasswordValueChange = { textPassword = it }
+        )
+        LoginButton(navController, textEmail, textPassword, viewModel)
     }
 }
 
@@ -54,7 +66,11 @@ fun NoteIcon() {
 
 @Composable
 fun LoginForm(
-    navController: NavController
+    navController: NavController,
+    textEmail: String,
+    textPassword: String,
+    onEmailValueChange: (String) -> Unit,
+    onPasswordValueChange: (String) -> Unit
 ) {
     Text(
         text = "Login",
@@ -64,12 +80,12 @@ fun LoginForm(
         modifier = Modifier.padding(top = 96.dp)
     )
 
-    var text by rememberSaveable { mutableStateOf("") }
     BasicTextField(
         modifier = Modifier
             .padding(top = 12.dp)
             .fillMaxWidth(),
-        value = text, onValueChange = { text = it },
+        value = textEmail,
+        onValueChange = { onEmailValueChange(it) },
         textStyle = TextStyle(
             color = Color.White,
             fontStyle = FontStyle(12)
@@ -92,7 +108,8 @@ fun LoginForm(
         modifier = Modifier
             .padding(top = 12.dp)
             .fillMaxWidth(),
-        value = text, onValueChange = { text = it },
+        value = textPassword,
+        onValueChange = { onPasswordValueChange(it) },
         textStyle = TextStyle(color = Color.White)
     )
     Divider(
@@ -133,13 +150,15 @@ fun LoginForm(
                 fontWeight = FontWeight.Light
             )
         )
-
     }
 }
 
 @Composable
 fun LoginButton(
-    navController: NavController
+    navController: NavController,
+    textEmail: String,
+    textPassword: String,
+    viewModel: ApiViewModel
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -156,12 +175,16 @@ fun LoginButton(
                 backgroundColor = MaterialTheme.colorScheme.background
             ),
             onClick = {
-                navController.navigate(route = Screen.List.route)
+                viewModel.login(email = textEmail, password = textPassword)
+                val test = viewModel.loginResponse
+                if (test != null) {
+                    if (test.success) {
+                        navController.navigate(route = Screen.List.route)
+                    }
+                }
             }
         ) {
             Text("Login")
         }
     }
-
 }
-

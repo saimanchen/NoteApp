@@ -3,22 +3,20 @@ package com.saisai.noteapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.saisai.noteapp.screens.AddNoteScreen
-import com.saisai.noteapp.screens.ListScreen
-import com.saisai.noteapp.screens.LoginScreen
-import com.saisai.noteapp.screens.RegisterScreen
+import com.saisai.noteapp.navigation.SetupNavGraph
 import com.saisai.noteapp.ui.theme.NoteAppTheme
+import com.saisai.noteapp.viewmodel.ApiViewModel
 
 class MainActivity : ComponentActivity() {
-    lateinit var navController: NavHostController
+    private lateinit var navController: NavHostController
+    private val viewModel by viewModels<ApiViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +28,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     navController = rememberNavController()
-                    SetupNavGraph(navController = navController)
+                    SetupNavGraph(navController = navController, viewModel)
                 }
             }
         }
